@@ -1,6 +1,6 @@
-package kz.bitlab.sprintone.dto;
+package kz.bitlab.gradledemo.dao;
 
-import kz.bitlab.sprintone.model.Student;
+import kz.bitlab.gradledemo.model.Item;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,16 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentDAO {
-    public static boolean create(Student student) {
+public class ItemDAO {
+    public static boolean create(Item item) {
         int row = 0;
 
         try {
             PreparedStatement stmt = Application.INSTANCE.connection().prepareStatement(
-                    "insert into student (name, surname, score) values (?, ?, ?)");
-            stmt.setString(1, student.getName());
-            stmt.setString(2, student.getSurname());
-            stmt.setInt(3, student.getScore());
+                    "insert into item (name, description, price) values (?, ?, ?)");
+            stmt.setString(1, item.getName());
+            stmt.setString(2, item.getDescription());
+            stmt.setDouble(3, item.getPrice());
 
             row = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -27,28 +27,26 @@ public class StudentDAO {
         return row > 0;
     }
 
-    public static List<Student> findAll() {
-        List<Student> students = new ArrayList<>();
+    public static List<Item> findAll() {
+        List<Item> items = new ArrayList<>();
 
         try {
             PreparedStatement stmt = Application.INSTANCE.connection().prepareStatement(
-                    "select * from student order by id desc");
+                    "select * from item order by id desc");
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Student student = new Student(
+                Item item = new Item(
                         rs.getLong("id"),
                         rs.getString("name"),
-                        rs.getString("surname"),
-                        rs.getInt("score")
-                );
-                students.add(student);
+                        rs.getString("description"),
+                        rs.getDouble("price"));
+                items.add(item);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return students;
+        return items;
     }
 }

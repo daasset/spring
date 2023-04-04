@@ -24,7 +24,7 @@
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-light" type="submit">Search</button>
             </form>
         </div>
     </div>
@@ -43,16 +43,22 @@
         </thead>
         <tbody>
         <tr th:each="student:${students}">
-            <th scope="row" th:class="${student.score lt 50} ? 'text-danger fw-bold' : ''" th:text="${student.id}"></th>
-            <td th:class="${student.score lt 50} ? 'text-danger fw-bold' : ''" th:text="${student.name}"></td>
-            <td th:class="${student.score lt 50} ? 'text-danger fw-bold' : ''" th:text="${student.surname}"></td>
-            <td th:class="${student.score lt 50} ? 'text-danger fw-bold' : ''" th:text="${student.score}"></td>
-            <td th:class="${student.score lt 50} ? 'text-danger fw-bold' : ''"
-                th:text="${student.score ge 90} ?
-                'A' : (${student.score ge 75} ?
-                    'B' : (${student.score ge 60} ?
-                        'C' : (${student.score ge 50} ?
-                            'D' : 'F')))"></td>
+            <th scope="row" th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}" th:text="${student.id}"></th>
+            <td th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}" th:text="${student.name}"></td>
+            <td th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}" th:text="${student.surname}"></td>
+            <td th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}" th:text="${student.score}"></td>
+            <!--            <td th:class="${student.score lt 50} ? 'text-danger fw-bold' : ''"-->
+            <!--                th:text="${student.score ge 90} ?-->
+            <!--                'A' : (${student.score ge 75} ?-->
+            <!--                    'B' : (${student.score ge 60} ?-->
+            <!--                        'C' : (${student.score ge 50} ?-->
+            <!--                            'D' : 'F')))"></td>-->
+            <td th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}"
+                th:text="${student.score >= 90 ?
+                    'A' : (student.score >= 75 ?
+                        'B' : (student.score >= 60 ?
+                            'C' : (student.score >= 50 ?
+                                'D' : 'F')))}"></td>
         </tr>
         </tbody>
     </table>

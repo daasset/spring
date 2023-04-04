@@ -10,10 +10,11 @@
 <div class="container">
     <div class="row" th:each="item:${items}">
         <div class="card">
-            <h4 class="card-title" th:text="${item.getName()}"></h4>
+            <h4 class="card-title" th:text="${item.name}"></h4>
             <div class="card-body">
-                <h5 class="card-text" th:text="${item.getPrice()}"></h5>
-                <h5 class="card-text" th:text="${item.getAmount()}"></h5>
+                <h5 class="card-text" th:text="${item.price}"></h5>
+                <h5 class="card-text" th:text="${item.amount}"></h5>
+                <h5 class="card-text" th:text="${item.level}"></h5>
             </div>
         </div>
     </div>

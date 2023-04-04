@@ -26,7 +26,10 @@ public class ItemController {
             @RequestParam(name = "item-amount") int amount) {
         String redirect = "/item/add-item?error";
 
-        Item item = new Item(null, name, price, amount);
+        String level = price >= 500_000? "expensive"
+                : (price >= 300_000 ? "normal" : "cheap");
+
+        Item item = new Item(null, name, price, amount, level);
         if (ItemDAO.addItem(item)) {
             redirect = "/item/add-item?success";
         }

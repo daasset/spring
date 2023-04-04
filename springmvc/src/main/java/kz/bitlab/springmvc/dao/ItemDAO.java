@@ -14,11 +14,12 @@ public class ItemDAO {
 
         try {
             PreparedStatement stmt = Application.INSTANCE.connection().prepareStatement(
-                "insert into items(name, price, amount) values(?, ?, ?)"
+                "insert into items(name, price, amount, level) values(?, ?, ?, ?)"
             );
             stmt.setString(1, item.getName());
             stmt.setInt(2, item.getPrice());
             stmt.setInt(3, item.getAmount());
+            stmt.setString(4, item.getLevel());
 
             rows = stmt.executeUpdate();
         } catch (Exception e) {
@@ -41,7 +42,8 @@ public class ItemDAO {
                         rs.getLong("id"),
                         rs.getString("name"),
                         rs.getInt("price"),
-                        rs.getInt("amount"));
+                        rs.getInt("amount"),
+                        rs.getString("level"));
                 items.add(item);
             }
         } catch (SQLException e) {

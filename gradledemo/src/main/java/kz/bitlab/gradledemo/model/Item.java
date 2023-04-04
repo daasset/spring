@@ -1,16 +1,15 @@
-package kz.bitlab.springmvc;
+package kz.bitlab.gradledemo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Item {
     private Long id;
     private String name;
-    private int price;
-    private int amount;
-    private String level;
+    private String description;
+    private double price;
 }

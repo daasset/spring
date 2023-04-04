@@ -1,6 +1,6 @@
 package kz.bitlab.sprintone.controller;
 
-import kz.bitlab.sprintone.dto.StudentDAO;
+import kz.bitlab.sprintone.dao.StudentDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
