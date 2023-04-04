@@ -27,6 +27,73 @@ public class StudentDAO {
         return row > 0;
     }
 
+    public static boolean edit(Student student) {
+        int row = 0;
+
+        try {
+            PreparedStatement stmt = Application.INSTANCE.connection().prepareStatement(
+                    "update student set name = ?, surname = ?, score = ? where id = ?");
+            stmt.setString(1, student.getName());
+            stmt.setString(2, student.getSurname());
+            stmt.setInt(3, student.getScore());
+            stmt.setLong(4, student.getId());
+
+            row = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return row > 0;
+    }
+
+    public static boolean delete(Student student) {
+        if (student == null || student.getId() == null) {
+            return false;
+        }
+
+        int row = 0;
+
+        try {
+            PreparedStatement stmt = Application.INSTANCE.connection().prepareStatement(
+                    "delete from student where id = ?");
+            stmt.setLong(1, student.getId());
+
+            row = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return row > 0;
+    }
+
+    public static Student findById(Long id) {
+        Student student = null;
+
+        if (id == null) {
+            return student;
+        }
+
+        try {
+            PreparedStatement stmt = Application.INSTANCE.connection().prepareStatement(
+                    "select * from student where id = ?");
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                student = new Student(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getInt("score")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return student;
+    }
+
     public static List<Student> findAll() {
         List<Student> students = new ArrayList<>();
 

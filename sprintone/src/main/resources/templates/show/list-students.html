@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Student List</a>
+        <a class="navbar-brand" href="/">Student List</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -39,6 +39,7 @@
             <th scope="col">SURNAME</th>
             <th scope="col">EXAM SCORE</th>
             <th scope="col">GRADE</th>
+            <th scope="col" class="text-end pe-3">DETAILS</th>
         </tr>
         </thead>
         <tbody>
@@ -47,18 +48,13 @@
             <td th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}" th:text="${student.name}"></td>
             <td th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}" th:text="${student.surname}"></td>
             <td th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}" th:text="${student.score}"></td>
-            <!--            <td th:class="${student.score lt 50} ? 'text-danger fw-bold' : ''"-->
-            <!--                th:text="${student.score ge 90} ?-->
-            <!--                'A' : (${student.score ge 75} ?-->
-            <!--                    'B' : (${student.score ge 60} ?-->
-            <!--                        'C' : (${student.score ge 50} ?-->
-            <!--                            'D' : 'F')))"></td>-->
             <td th:class="${student.score < 50 ? 'text-danger fw-bold' : ''}"
                 th:text="${student.score >= 90 ?
                     'A' : (student.score >= 75 ?
                         'B' : (student.score >= 60 ?
                             'C' : (student.score >= 50 ?
                                 'D' : 'F')))}"></td>
+            <td class="text-end"><a class="btn btn-primary" th:href="@{/manage/edit-student/{id}(id=${student.id})}">DETAILS</a></td>
         </tr>
         </tbody>
     </table>

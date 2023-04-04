@@ -12,6 +12,6 @@ public class StudentListController {
     @GetMapping
     public String showStudents(Model model) {
         model.addAttribute("students", StudentDAO.findAll());
-        return "/list/list-students";
+        return "/show/list-students";
     }
 }
