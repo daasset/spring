@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <style>
+        .bg-main {
+            background-color: #2F8F9E;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-main">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">TASK MANAGER</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">All tasks</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="mt-4">
+        <button class="btn btn-dark bg-main border-0" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+            + Add New Task</button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">New Task</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/manage/add-task}" method="post" id="add-task-form">
+                        <div class="mb-3">
+                            <label for="task-name" class="form-label">TASK NAME:</label>
+                            <input type="text" class="form-control" id="task-name" name="task-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="task-description" class="form-label">TASK DESCRIPTION:</label>
+                            <textarea rows="4" class="form-control" id="task-description" name="task-description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="task-duedate" class="form-label">TASK DEADLINE DATE:</label>
+                            <input type="date" class="form-control" id="task-duedate" name="task-duedate">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('add-task-form').submit()">Add Task</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">DEADLINE DATE</th>
+            <th scope="col">IS COMPLETED</th>
+            <th scope="col" class="text-end pe-2">DETAILS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task:${tasks}">
+            <th th:text="${task.id}"></th>
+            <td th:text="${task.name}"></td>
+            <td th:text="${task.dueDate}"></td>
+            <td th:text="${task.complete? 'YES' : 'NO'}"></td>
+            <td class="text-end">
+                <button class="btn btn-dark bg-main border-0" data-bs-toggle="modal"
+                        th:attr="data-bs-target='#editTaskModal'+${task.id}">
+                    DETAILS</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal for editing-->
+    <div class="modal fade" th:attr="id='editTaskModal' + ${task.id}" tabindex="-1" th:each="task:${tasks}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">New Task</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/manage/edit-task}" method="post" th:attr="id='edit-task-form-' + ${task.id}">
+                        <input type="text" class="invisible" name="task-id" th:value="${task.id}">
+                        <div class="mb-3">
+                            <label th:attr="for='task-name-' + ${task.id}" class="form-label">TASK NAME:</label>
+                            <input type="text" class="form-control" th:attr="id='task-name-' + ${task.id}" name="task-name"
+                                   th:value="${task.name}">
+                        </div>
+                        <div class="mb-3">
+                            <label th:attr="for='task-description-' + ${task.id}" class="form-label">TASK DESCRIPTION:</label>
+                            <textarea rows="4" class="form-control" th:attr="id='task-description-' + ${task.id}"
+                                      name="task-description" th:text="${task.description}"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label th:attr="for='task-duedate-' + ${task.id}" class="form-label">TASK DEADLINE DATE:</label>
+                            <input type="date" class="form-control" th:attr="id='task-duedate-' + ${task.id}"
+                                   name="task-duedate" th:value="${task.dueDate}">
+                        </div>
+                        <div class="mb-3">
+                            <label th:attr="for='task-complete-' + ${task.id}" class="form-label">TASK DEADLINE DATE:</label>
+                            <select class="form-select" th:attr="id='task-complete-' + ${task.id}"
+                                    name="task-complete">
+                                <option value="true" th:selected="${task.complete}">YES</option>
+                                <option value="false" th:selected="${!task.complete}">NO</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            th:onclick="'document.getElementById(\'edit-task-form-' + ${task.id} + '\').submit()'">Edit Task</button>
+                    <button type="button" class="btn btn-danger"
+                            th:onclick="'document.getElementById(\'delete-task-form-' + ${task.id} + '\').submit()'">Delete Task</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                <form th:action="@{/manage/delete-task}" method="post" th:attr="id='delete-task-form-' + ${task.id}"
+                      class="invisible">
+                    <input type="text" class="invisible" name="task-id" th:value="${task.id}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+</body>
+</html>
