@@ -7,28 +7,28 @@
     <div class="w-50 mx-auto mt-3">
         <form th:action="@{/manage/add-ar}" method="post">
             <div class="mb-3">
-                <label for="ar-user-name" class="form-label">ФИО:</label>
+                <label for="ar-user-name" class="form-label" th:text="#{label.name}"></label>
                 <input type="text" class="form-control" id="ar-user-name" name="ar-user-name"
-                       placeholder="ФИО">
+                       th:placeholder="#{label.name}">
             </div>
             <div class="mb-3">
-                <label for="ar-course-name" class="form-label">Курс:</label>
+                <label for="ar-course-name" class="form-label" th:text="#{label.course}"></label>
                 <select class="form-select" id="ar-course-name" name="ar-course-name">
                     <option>Java Standard Edition</option>
                     <option>Web Technologies</option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="ar-phone" class="form-label">Телефон:</label>
+                <label for="ar-phone" class="form-label" th:text="#{label.phone}"></label>
                 <input type="text" class="form-control" id="ar-phone" name="ar-phone"
                        placeholder="+7(7__)___-__-__">
             </div>
             <div class="mb-3">
-                <label for="ar-comment" class="form-label">Телефон:</label>
+                <label for="ar-comment" class="form-label" th:text="#{label.comment}"></label>
                 <textarea rows="4" class="form-control" id="ar-comment" name="ar-comment"
-                          placeholder="Комментарий"></textarea>
+                          th:placeholder="#{label.comment}"></textarea>
             </div>
-            <button type="submit" class="btn btn-success bg-gradient">Добавить заявку</button>
+            <button type="submit" class="btn btn-success bg-gradient" th:text="#{button.add-request}"></button>
         </form>
     </div>
 </div>

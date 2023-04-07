@@ -3,7 +3,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success bg-gradient">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">CRM Система</a>
+            <a class="navbar-brand" href="/" th:text="#{nav.logo}"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
@@ -11,17 +11,29 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a th:class="'nav-link' + ${page == '' ? ' active' : ''}" href="/">Все Заявки</a>
+                        <a th:class="'nav-link' + ${page == '' ? ' active' : ''}"
+                           href="/" th:text="#{nav.all-request}"></a>
                     </li>
                     <li class="nav-item">
-                        <a th:class="'nav-link' + ${page == 'new' ? ' active' : ''}" href="/list/new">Новые Заявки</a>
+                        <a th:class="'nav-link' + ${page == 'new' ? ' active' : ''}"
+                           href="/list/new" th:text="#{nav.new-request}"></a>
                     </li>
                     <li class="nav-item">
-                        <a th:class="'nav-link' + ${page == 'handled' ? ' active' : ''}" href="/list/handled">
-                            Обработанные Заявки</a>
+                        <a th:class="'nav-link' + ${page == 'handled' ? ' active' : ''}"
+                           href="/list/handled" th:text="#{nav.handled-request}"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/manage/add-ar">+ Добавить Заявку</a>
+                        <a class="nav-link" href="/manage/add-ar"
+                           th:text="#{nav.add-request}"></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=ru">RUS</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=en">ENG</a>
                     </li>
                 </ul>
             </div>

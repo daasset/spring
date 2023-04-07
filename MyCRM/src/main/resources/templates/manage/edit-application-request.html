@@ -5,18 +5,18 @@
       layout:decorate="~{layout/main}">
 <div layout:fragment="main_content";>
     <div class="w-50 mx-auto mt-3">
-        <div th:if="${ar.handled}" class="h5 text-center text-success">Обработанная заявка</div>
-        <div th:unless="${ar.handled}" class="h5 text-center text-danger">*** Новая необработанная заявка ***</div>
+        <div th:if="${ar.handled}" class="h5 text-center text-success" th:text="#{add-request.handled-text}"></div>
+        <div th:unless="${ar.handled}" class="h5 text-center text-danger" th:text="#{add-request.new-text}"></div>
 
         <h5 class="text-danger"></h5>
         <form th:action="@{/manage/add-ar}" method="post">
             <div class="mt-3">
-                <label for="ar-user-name" class="form-label">ФИО:</label>
+                <label for="ar-user-name" class="form-label" th:text="#{label.name}"></label>
                 <input type="text" class="form-control" id="ar-user-name" name="ar-user-name"
                        th:value="${ar.userName}" disabled readonly>
             </div>
             <div class="mt-3">
-                <label for="ar-course-name" class="form-label">Курс:</label>
+                <label for="ar-course-name" class="form-label" th:text="#{label.course}"></label>
                 <select class="form-select" id="ar-course-name" name="ar-course-name"
                         th:field="*{ar.courseName}" disabled readonly>
                     <option th:value="'Java Standard Edition'" th:text="'Java Standard Edition'"></option>
@@ -24,23 +24,24 @@
                 </select>
             </div>
             <div class="mt-3">
-                <label for="ar-phone" class="form-label">Телефон:</label>
+                <label for="ar-phone" class="form-label" th:text="#{label.phone}"></label>
                 <input type="text" class="form-control" id="ar-phone" name="ar-phone"
                        th:value="${ar.phone}" disabled readonly>
             </div>
             <div class="mt-3">
-                <label for="ar-comment" class="form-label">Телефон:</label>
+                <label for="ar-comment" class="form-label" th:text="#{label.comment}"></label>
                 <textarea rows="4" class="form-control" id="ar-comment" name="ar-comment"
                           th:text="${ar.comment}" disabled readonly></textarea>
             </div>
 
             <div class="mt-3">
                 <a href="#" type="submit" class="btn btn-success bg-gradient"
-                        th:unless="${ar.handled}"
-                        onclick="document.getElementById('handle-form').submit();">Обработать заявку</a>
+                   th:unless="${ar.handled}" th:text="#{button.handle-request}"
+                   onclick="document.getElementById('handle-form').submit();"></a>
                 <a href="#" type="submit" class="btn btn-danger bg-gradient ms-2"
-                        onclick="if(confirm('Вы уверены что хотите удалить заявку?'))
-                        document.getElementById('delete-form').submit();">Удалить заявку</a>
+                   th:text="#{button.delete-request}"
+                   onclick="if(confirm('Вы уверены что хотите удалить заявку?'))
+                       document.getElementById('delete-form').submit();">Удалить заявку</a>
             </div>
         </form>
         <form th:action="@{/manage/handle-ar/{id}(id=${ar.id})}" method="post" id="handle-form"></form>

@@ -30,7 +30,7 @@ public class ApplicationRequestManagementController {
                 null, userName, courseName, comment, phone, false);
 
         if (applicationRequestRepository.save(ar) != null) {
-            redirectStr = "?success";
+            redirectStr = "/?success";
         }
 
         return "redirect:" + redirectStr;

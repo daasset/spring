@@ -9,7 +9,8 @@
             <div class="card h-100">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">
-                        <span class="text-danger fw-bold" th:text="${ar.handled? '' : '*(Новая) '}"></span>Заявка от
+                        <span class="text-danger fw-bold" th:unless="${ar.handled}" th:text="#{card.status}"></span>
+                        <span th:text="#{card.from-text}"></span>
                         <span class="fw-bold" th:text="${ar.userName}"></span>
                     </h5>
                     <p class="card-subtitle mt-3 text-muted">
@@ -20,7 +21,7 @@
 
                     <div class="mt-auto">
                         <span class="fw-bold" th:text="${ar.phone}"></span>
-                        <a th:href="@{/manage/edit-ar/{id}(id=${ar.id})}" class="card-link">Подробнее</a>
+                        <a th:href="@{/manage/edit-ar/{id}(id=${ar.id})}" class="card-link" th:text="#{card.link-text}"></a>
                     </div>
                 </div>
             </div>
