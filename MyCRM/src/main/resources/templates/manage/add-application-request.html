@@ -14,8 +14,7 @@
             <div class="mb-3">
                 <label for="ar-course-name" class="form-label" th:text="#{label.course}"></label>
                 <select class="form-select" id="ar-course-name" name="ar-course-name">
-                    <option>Java Standard Edition</option>
-                    <option>Web Technologies</option>
+                    <option th:value="${course.name}" th:text="${course.name}" th:each="course : ${courses}">/option>
                 </select>
             </div>
             <div class="mb-3">

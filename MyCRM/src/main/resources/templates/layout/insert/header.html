@@ -23,8 +23,17 @@
                            href="/list/handled" th:text="#{nav.handled-request}"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/manage/add-ar"
-                           th:text="#{nav.add-request}"></a>
+                        <a th:class="'nav-link' + ${page == 'add-ar' ? ' active' : ''}"
+                           href="/manage/add-ar" th:text="#{nav.add-request}"></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a th:class="'nav-link' + ${page == 'courses' ? ' active' : ''}"
+                           href="/courses" th:text="#{nav.courses}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:class="'nav-link' + ${page == 'add-course' ? ' active' : ''}"
+                           href="/courses/add" th:text="#{nav.add-course}"></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

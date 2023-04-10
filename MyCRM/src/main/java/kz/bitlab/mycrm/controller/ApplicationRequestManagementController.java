@@ -1,7 +1,9 @@
 package kz.bitlab.mycrm.controller;
 
 import kz.bitlab.mycrm.entities.ApplicationRequest;
+import kz.bitlab.mycrm.entities.Course;
 import kz.bitlab.mycrm.repository.ApplicationRequestRepository;
+import kz.bitlab.mycrm.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +12,20 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/manage")
 public class ApplicationRequestManagementController {
-    @Autowired
-    ApplicationRequestRepository applicationRequestRepository;
+    private ApplicationRequestRepository applicationRequestRepository;
+    private CourseRepository courseRepository;
+
+    public ApplicationRequestManagementController(
+            @Autowired ApplicationRequestRepository applicationRequestRepository,
+            @Autowired CourseRepository courseRepository) {
+        this.applicationRequestRepository = applicationRequestRepository;
+        this.courseRepository = courseRepository;
+    }
 
     @GetMapping("/add-ar")
-    public String addApplicationRequest() {
+    public String addApplicationRequest(Model model) {
+        model.addAttribute("page", "add-ar");
+        model.addAttribute("courses", courseRepository.findAll());
         return "/manage/add-application-request";
     }
 
@@ -26,8 +37,10 @@ public class ApplicationRequestManagementController {
             @RequestParam(name = "ar-comment") String comment) {
         String redirectStr = "/manage/add-ar?error";
 
+        Course course = courseRepository.findByName(courseName);
+
         ApplicationRequest ar = new ApplicationRequest(
-                null, userName, courseName, comment, phone, false);
+                null, userName, comment, phone, false, course);
 
         if (applicationRequestRepository.save(ar) != null) {
             redirectStr = "/?success";

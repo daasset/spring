@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class HomeController {
-    @Autowired
     private ApplicationRequestRepository applicationRequestRepository;
+
+    public HomeController(@Autowired ApplicationRequestRepository applicationRequestRepository) {
+        this.applicationRequestRepository = applicationRequestRepository;
+    }
 
     @GetMapping
     public String showAllApplicationRequests(Model model) {

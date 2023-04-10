@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<div layout:fragment="main_content";>
+    <div class="w-50 mx-auto mt-3">
+        <form th:action="@{/courses/add}" method="post">
+            <div class="mb-3">
+                <label for="course-name" class="form-label" th:text="#{label.course-name}"></label>
+                <input type="text" class="form-control" id="course-name" name="course-name"
+                       th:placeholder="#{label.course-name}">
+            </div>
+            <div class="mb-3">
+                <label for="course-description" class="form-label" th:text="#{label.course-description}"></label>
+                <textarea rows="4" class="form-control" id="course-description" name="course-description"
+                          th:placeholder="#{label.course-description}"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="course-price" class="form-label" th:text="#{label.course-price}"></label>
+                <input type="number" class="form-control" id="course-price" name="course-price"
+                       th:placeholder="#{label.course-price}">
+            </div>
+
+            <button type="submit" class="btn btn-success bg-gradient" th:text="#{button.add-course}"></button>
+        </form>
+    </div>
+</div>
+</html>

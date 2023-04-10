@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<div layout:fragment="main_content" ;>
+    <div class="row row-cols-2 mt-3">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col" th:text="#{label.course-name}"></th>
+                <th scope="col" th:text="#{label.course-description}"></th>
+                <th scope="col" th:text="#{label.course-price}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course:${courses}">
+                <th th:text="${course.id}"></th>
+                <td th:text="${course.name}"></td>
+                <td th:text="${course.description}"></td>
+                <td th:text="${course.price} + ' KZT'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>
