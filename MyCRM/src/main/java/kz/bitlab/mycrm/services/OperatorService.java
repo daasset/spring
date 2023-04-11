@@ -1,19 +1,20 @@
 package kz.bitlab.mycrm.services;
 
-import kz.bitlab.mycrm.entities.Course;
+import kz.bitlab.mycrm.entities.Operator;
+
 import java.util.List;
 
-public interface CourseService {
+public interface OperatorService {
 
     /*
         Getters
      */
-    Course getCourseByName(String name);
-    List<Course> getAllCourses();
+    Operator getOperatorById(Long id);
+    List<Operator> getAllOperators();
+
 
     /*
         Modifiers
      */
-    Course createCourse(Course course);
-
+    List<Operator> getAllOperatorsByIds(List<Long> ids);
 }

@@ -20,7 +20,7 @@ public class CoursesController {
     @GetMapping
     public String showCourses(Model model) {
         model.addAttribute("page", "courses");
-        model.addAttribute("courses", courseService.getAllCourses());
+        model.addAttribute("allCourses", courseService.getAllCourses());
         return "courses";
     }
 

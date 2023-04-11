@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "application_request")
 @Data
@@ -25,4 +27,6 @@ public class ApplicationRequest {
     private boolean handled;
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Operator> operators;
 }

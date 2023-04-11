@@ -3,13 +3,13 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/main}">
-<div layout:fragment="main_content";>
+<div layout:fragment="main_content">
     <div class="w-50 mx-auto">
         <div th:if="${ar.handled}" class="h5 text-center text-success" th:text="#{add-request.handled-text}"></div>
         <div th:unless="${ar.handled}" class="h5 text-center text-danger" th:text="#{add-request.new-text}"></div>
 
         <h5 class="text-danger"></h5>
-        <form th:action="@{/manage/add-ar}" method="post">
+        <form>
             <div class="mt-3">
                 <label for="ar-user-name" class="form-label" th:text="#{label.name}"></label>
                 <input type="text" class="form-control" id="ar-user-name" name="ar-user-name"
@@ -19,7 +19,7 @@
                 <label for="ar-course-name" class="form-label" th:text="#{label.course}"></label>
                 <select class="form-select" id="ar-course-name" name="ar-course-name"
                         th:field="*{ar.course.id}" disabled readonly>
-                    <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+                    <option th:each="course : ${allCourses}" th:value="${course.id}" th:text="${course.name}"></option>
                 </select>
             </div>
             <div class="mt-3">
@@ -34,17 +34,88 @@
             </div>
 
             <div class="mt-3">
-                <a href="#" type="submit" class="btn btn-success bg-gradient"
-                   th:unless="${ar.handled}" th:text="#{button.handle-request}"
-                   onclick="document.getElementById('handle-form').submit();"></a>
-                <a href="#" type="submit" class="btn btn-danger bg-gradient ms-2"
+                <button type="button" class="btn btn-success bg-gradient me-2"
+                        data-bs-toggle="modal" data-bs-target="#handleModal"
+                        th:unless="${ar.handled}" th:text="#{button.handle-request}"></button>
+                <a href="#" class="btn btn-danger bg-gradient"
                    th:text="#{button.delete-request}"
                    onclick="if(confirm('Вы уверены что хотите удалить заявку?'))
                        document.getElementById('delete-form').submit();">Удалить заявку</a>
             </div>
         </form>
-        <form th:action="@{/manage/handle-ar/{id}(id=${ar.id})}" method="post" id="handle-form"></form>
+
         <form th:action="@{/manage/delete-ar/{id}(id=${ar.id})}" method="post" id="delete-form"></form>
+
+        <!-- Handle Modal -->
+        <div class="modal fade modal-lg" id="handleModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="#{title.modal-choose-operator}"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/manage/handle-ar/{id}(id=${ar.id})}" method="post" id="handle-form">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col" th:text="#{thead.select}"></th>
+                                    <th scope="col" th:text="#{thead.name}"></th>
+                                    <th scope="col" th:text="#{thead.surname}"></th>
+                                    <th scope="col" th:text="#{thead.department}"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="op : ${allOperators}">
+                                    <th>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                   name="operators" th:value="${op.id}">
+                                        </div>
+                                    </th>
+                                    <td th:text="${op.name}"></td>
+                                    <td th:text="${op.surname}"></td>
+                                    <td th:text="${op.department}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary bg-gradient" data-bs-dismiss="modal"
+                                th:text="#{button.cancel}"></button>
+                        <a href="#" class="btn btn-primary bg-gradient" th:text="#{button.assign-operators}"
+                           onclick="document.getElementById('handle-form').submit();"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Showing Operators -->
+        <table th:unless="${ar.operators.isEmpty()}" class="table table-striped mt-4">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{thead.delete}"></th>
+                <th scope="col" th:text="#{thead.name}"></th>
+                <th scope="col" th:text="#{thead.surname}"></th>
+                <th scope="col" th:text="#{thead.department}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="op : ${ar.operators}">
+                <th>
+                    <form th:action="@{/manage/ar-remove-operator/{id}(id=${ar.id})}" method="post">
+                        <input type="text" name="operator-id" th:value="${op.id}" class="d-none">
+                        <button class="btn btn-danger bg-gradient">X</button>
+                    </form>
+
+                </th>
+                <td th:text="${op.name}"></td>
+                <td th:text="${op.surname}"></td>
+                <td th:text="${op.department}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </html>
