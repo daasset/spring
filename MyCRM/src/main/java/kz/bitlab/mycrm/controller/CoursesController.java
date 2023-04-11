@@ -2,6 +2,8 @@ package kz.bitlab.mycrm.controller;
 
 import kz.bitlab.mycrm.entities.Course;
 import kz.bitlab.mycrm.repository.CourseRepository;
+import kz.bitlab.mycrm.services.CourseService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,19 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/courses")
 public class CoursesController {
 
-    private CourseRepository courseRepository;
-
-    public CoursesController(@Autowired CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
+    private CourseService courseService;
 
     @GetMapping
     public String showCourses(Model model) {
         model.addAttribute("page", "courses");
-        model.addAttribute("courses", courseRepository.findAll());
+        model.addAttribute("courses", courseService.getAllCourses());
         return "courses";
     }
 
@@ -40,7 +39,7 @@ public class CoursesController {
             @RequestParam(name = "course-price") int price) {
         Course course = new Course(null, name, description, price);
         String redirectStr = "/courses/add?error";
-        if (courseRepository.save(course) != null) {
+        if (courseService.createCourse(course) != null) {
             redirectStr = "/courses?success";
         }
 

@@ -4,28 +4,28 @@ import kz.bitlab.mycrm.entities.ApplicationRequest;
 import kz.bitlab.mycrm.entities.Course;
 import kz.bitlab.mycrm.repository.ApplicationRequestRepository;
 import kz.bitlab.mycrm.repository.CourseRepository;
+import kz.bitlab.mycrm.services.ApplicationRequestService;
+import kz.bitlab.mycrm.services.CourseService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/manage")
 public class ApplicationRequestManagementController {
-    private ApplicationRequestRepository applicationRequestRepository;
-    private CourseRepository courseRepository;
+    private ApplicationRequestService applicationRequestService;
+    private CourseService courseService;
 
-    public ApplicationRequestManagementController(
-            @Autowired ApplicationRequestRepository applicationRequestRepository,
-            @Autowired CourseRepository courseRepository) {
-        this.applicationRequestRepository = applicationRequestRepository;
-        this.courseRepository = courseRepository;
-    }
+
+
 
     @GetMapping("/add-ar")
     public String addApplicationRequest(Model model) {
         model.addAttribute("page", "add-ar");
-        model.addAttribute("courses", courseRepository.findAll());
+        model.addAttribute("courses", courseService.getAllCourses());
         return "/manage/add-application-request";
     }
 
@@ -37,12 +37,12 @@ public class ApplicationRequestManagementController {
             @RequestParam(name = "ar-comment") String comment) {
         String redirectStr = "/manage/add-ar?error";
 
-        Course course = courseRepository.findByName(courseName);
+        Course course = courseService.getCourseByName(courseName);
 
         ApplicationRequest ar = new ApplicationRequest(
                 null, userName, comment, phone, false, course);
 
-        if (applicationRequestRepository.save(ar) != null) {
+        if (applicationRequestService.createApplicationRequest(ar) != null) {
             redirectStr = "/?success";
         }
 
@@ -53,7 +53,7 @@ public class ApplicationRequestManagementController {
     public String editApplicationRequest(
             @PathVariable long id,
             Model model) {
-        ApplicationRequest ar = applicationRequestRepository.findById(id).get();
+        ApplicationRequest ar = applicationRequestService.getApplicationRequest(id);
         if (ar != null) {
             model.addAttribute("ar", ar);
             return "/manage/edit-application-request";
@@ -67,10 +67,10 @@ public class ApplicationRequestManagementController {
             @PathVariable long id) {
         String redirectStr = String.format("/manage/edit-ar/%d?error", id);
 
-        ApplicationRequest ar = applicationRequestRepository.findById(id).get();
+        ApplicationRequest ar = applicationRequestService.getApplicationRequest(id);
         if (ar != null) {
             ar.setHandled(true);
-            if (applicationRequestRepository.save(ar) != null) {
+            if (applicationRequestService.updateApplicationRequest(ar) != null) {
                 redirectStr = String.format("/manage/edit-ar/%d?success", id);
             }
         } else {
@@ -85,10 +85,10 @@ public class ApplicationRequestManagementController {
             @PathVariable long id) {
         String redirectStr = String.format("/manage/edit-ar/%d?error", id);
 
-        ApplicationRequest ar = applicationRequestRepository.findById(id).get();
+        ApplicationRequest ar = applicationRequestService.getApplicationRequest(id);
         if (ar != null) {
             ar.setHandled(true);
-            applicationRequestRepository.delete(ar);
+            applicationRequestService.deleteApplicationRequest(ar);
             redirectStr = "/?success";
         } else {
             redirectStr = "/?error=id_not_found";
