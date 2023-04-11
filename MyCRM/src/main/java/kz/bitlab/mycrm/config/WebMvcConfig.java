@@ -9,7 +9,6 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 @Configuration
@@ -20,7 +19,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
-        return  messageSource;
+        return messageSource;
     }
 
     @Bean

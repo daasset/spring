@@ -1,7 +1,6 @@
 package kz.bitlab.mycrm.services;
 
 import kz.bitlab.mycrm.entities.Course;
-
 import java.util.List;
 
 public interface CourseService {

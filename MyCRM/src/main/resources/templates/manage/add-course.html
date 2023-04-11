@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/main}">
 <div layout:fragment="main_content";>
-    <div class="w-50 mx-auto mt-3">
+    <div class="w-50 mx-auto">
         <form th:action="@{/courses/add}" method="post">
             <div class="mb-3">
                 <label for="course-name" class="form-label" th:text="#{label.course-name}"></label>

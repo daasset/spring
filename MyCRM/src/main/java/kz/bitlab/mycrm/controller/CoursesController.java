@@ -1,10 +1,8 @@
 package kz.bitlab.mycrm.controller;
 
 import kz.bitlab.mycrm.entities.Course;
-import kz.bitlab.mycrm.repository.CourseRepository;
 import kz.bitlab.mycrm.services.CourseService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

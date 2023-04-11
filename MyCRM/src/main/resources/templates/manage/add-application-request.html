@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/main}">
 <div layout:fragment="main_content";>
-    <div class="w-50 mx-auto mt-3">
+    <div class="w-50 mx-auto">
         <form th:action="@{/manage/add-ar}" method="post">
             <div class="mb-3">
                 <label for="ar-user-name" class="form-label" th:text="#{label.name}"></label>

@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/main}">
 <div layout:fragment="main_content";>
-    <div class="w-50 mx-auto mt-3">
+    <div class="w-50 mx-auto">
         <div th:if="${ar.handled}" class="h5 text-center text-success" th:text="#{add-request.handled-text}"></div>
         <div th:unless="${ar.handled}" class="h5 text-center text-danger" th:text="#{add-request.new-text}"></div>
 
@@ -18,9 +18,8 @@
             <div class="mt-3">
                 <label for="ar-course-name" class="form-label" th:text="#{label.course}"></label>
                 <select class="form-select" id="ar-course-name" name="ar-course-name"
-                        th:field="*{ar.courseName}" disabled readonly>
-                    <option th:value="'Java Standard Edition'" th:text="'Java Standard Edition'"></option>
-                    <option th:value="'Web Technologies'" th:text="'Web Technologies'"></option>
+                        th:field="*{ar.course.id}" disabled readonly>
+                    <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
                 </select>
             </div>
             <div class="mt-3">

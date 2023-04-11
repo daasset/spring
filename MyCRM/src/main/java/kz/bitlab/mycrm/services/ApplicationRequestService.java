@@ -1,7 +1,6 @@
 package kz.bitlab.mycrm.services;
 
 import kz.bitlab.mycrm.entities.ApplicationRequest;
-
 import java.util.List;
 
 public interface ApplicationRequestService {
