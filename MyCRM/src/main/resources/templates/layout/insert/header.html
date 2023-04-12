@@ -45,6 +45,10 @@
                         <a class="nav-link" href="?lang=en">ENG</a>
                     </li>
                 </ul>
+                <form th:action="@{/}" method="post" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" name="search-string" th:placeholder="#{label.search}">
+                    <button class="btn btn-light bg-gradient" type="submit" th:text="#{label.search}"></button>
+                </form>
             </div>
         </div>
     </nav>

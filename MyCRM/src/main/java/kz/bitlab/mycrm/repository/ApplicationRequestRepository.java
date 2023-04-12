@@ -11,4 +11,10 @@ import java.util.List;
 @Transactional
 public interface ApplicationRequestRepository extends JpaRepository<ApplicationRequest, Long> {
     List<ApplicationRequest> findByHandled(boolean handled);
+    List<ApplicationRequest> findByUserNameContainsIgnoreCase(String userNameFragment);
+    List<ApplicationRequest> findByCommentContainsIgnoreCase(String commentFragment);
+    List<ApplicationRequest> findByPhoneContainsIgnoreCase(String phoneFragment);
+    List<ApplicationRequest> findByCourseNameContainsIgnoreCase(String courseNameFragment);
+
+
 }

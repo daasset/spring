@@ -9,6 +9,8 @@ public interface ApplicationRequestService {
      */
     ApplicationRequest getApplicationRequest(Long id);
     List<ApplicationRequest> getAllApplicationRequests();
+    List<ApplicationRequest> getAllApplicationRequestsByHandled(boolean handled);
+    List<ApplicationRequest> getAllApplicationRequestsByUserNameOrCommentOrCourseNameFragment(String fragment);
 
     /*
         Modifiers

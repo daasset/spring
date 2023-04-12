@@ -6,7 +6,10 @@ import kz.bitlab.mycrm.services.ApplicationRequestService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +23,21 @@ public class ApplicationRequestServiceImpl implements ApplicationRequestService 
             throw new IllegalArgumentException("Cannot get ApplicationRequest with id = null");
         }
         return applicationRequestRepository.findById(id).get();
+    }
+
+    @Override
+    public List<ApplicationRequest> getAllApplicationRequestsByHandled(boolean handled) {
+        return applicationRequestRepository.findByHandled(handled);
+    }
+
+    @Override
+    public List<ApplicationRequest> getAllApplicationRequestsByUserNameOrCommentOrCourseNameFragment(String fragment) {
+        Set<ApplicationRequest> res = new HashSet<>();
+        res.addAll(applicationRequestRepository.findByUserNameContainsIgnoreCase(fragment));
+        res.addAll(applicationRequestRepository.findByCommentContainsIgnoreCase(fragment));
+        res.addAll(applicationRequestRepository.findByPhoneContainsIgnoreCase(fragment));
+        res.addAll(applicationRequestRepository.findByCourseNameContainsIgnoreCase(fragment));
+        return new ArrayList<>(res);
     }
 
     @Override
