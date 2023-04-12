@@ -15,6 +15,8 @@ public interface ApplicationRequestRepository extends JpaRepository<ApplicationR
     List<ApplicationRequest> findByCommentContainsIgnoreCase(String commentFragment);
     List<ApplicationRequest> findByPhoneContainsIgnoreCase(String phoneFragment);
     List<ApplicationRequest> findByCourseNameContainsIgnoreCase(String courseNameFragment);
+    List<ApplicationRequest> findByUserNameContainsIgnoreCaseOrCommentContainsIgnoreCaseOrPhoneContainsIgnoreCaseOrCourse_NameContainsIgnoreCase(
+            String userNameFragment, String commentFragment, String phoneFragment, String courseNameFragment);
 
 
 }

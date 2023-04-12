@@ -32,12 +32,9 @@ public class ApplicationRequestServiceImpl implements ApplicationRequestService 
 
     @Override
     public List<ApplicationRequest> getAllApplicationRequestsByUserNameOrCommentOrCourseNameFragment(String fragment) {
-        Set<ApplicationRequest> res = new HashSet<>();
-        res.addAll(applicationRequestRepository.findByUserNameContainsIgnoreCase(fragment));
-        res.addAll(applicationRequestRepository.findByCommentContainsIgnoreCase(fragment));
-        res.addAll(applicationRequestRepository.findByPhoneContainsIgnoreCase(fragment));
-        res.addAll(applicationRequestRepository.findByCourseNameContainsIgnoreCase(fragment));
-        return new ArrayList<>(res);
+        return applicationRequestRepository.findByUserNameContainsIgnoreCaseOrCommentContainsIgnoreCaseOrPhoneContainsIgnoreCaseOrCourse_NameContainsIgnoreCase(
+                fragment, fragment, fragment, fragment
+        );
     }
 
     @Override
