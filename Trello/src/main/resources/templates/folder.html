@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<div layout:fragment="main_content">
+    <div class="card mt-4">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <h5 class="card-title" th:text="${folder.name}"></h5>
+            <div class="align-middle">
+                <form th:action="@{/folder/category/remove}" method="post"
+                      th:each="category : ${folder.categories}" class="d-inline-block">
+                    <input type="text" class="visually-hidden" name="folder-id" th:value="${folder.id}">
+                    <input type="text" class="visually-hidden" name="category-id" th:value="${category.id}">
+                    <button type="submit" class="btn btn-primary btn-sm me-2" th:text="${category.name} + ' x'"></button>
+                </form>
+                <a th:unless="${unassignedCategories.isEmpty()}" href="#" class="h6 link-dark link-underline-opacity-0 link-underline-opacity-100-hover"
+                   data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    + Add Category
+                </a>
+            </div>
+
+
+            <!-- Modal for adding category -->
+            <div class="modal fade" id="addCategoryModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form th:action="@{/folder/category/add}" method="post">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">ASSIGN CATEGORY</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="visually-hidden" name="folder-id" th:value="${folder.id}">
+
+                                <div class="mb-3">
+                                    <label for="categoryId" class="form-label">TITLE:</label>
+                                    <select class="form-select" id="categoryId" name="category-id">
+                                        <option th:each="category : ${unassignedCategories}"
+                                                th:value="${category.id}" th:text="${category.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</a>
+                                <button type="submit" class="btn btn-success">ADD</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button for new task with modal -->
+    <div class="mt-4">
+        <a href="#" class="h5 link-dark link-underline-opacity-0 link-underline-opacity-100-hover"
+           data-bs-toggle="modal" data-bs-target="#newTaskModal">
+            + New Task
+        </a>
+
+        <div class="modal fade" id="newTaskModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{/folder/task/add}" method="post">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5">ADD NEW TASK</h1>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="visually-hidden" name="folder-id" th:value="${folder.id}">
+
+                            <div class="mb-3">
+                                <label for="taskTitle" class="form-label">TITLE:</label>
+                                <input type="text" class="form-control" id="taskTitle" name="task-title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="taskDescription" class="form-label">DESCRIPTION:</label>
+                                <textarea rows="4" class="form-control" id="taskDescription" name="task-description"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</a>
+                            <button type="submit" class="btn btn-success">ADD</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Task name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}">
+                <th class="align-middle" th:text="${task.id}"></th>
+                <td class="align-middle w-75" th:text="${task.title}"></td>
+                <td class="align-middle" th:text="${task.status.displayName}"></td>
+                <td class="align-middle">
+                    <a th:href="@{/task/{id}(id = ${task.id})}" class="btn btn-primary">View More</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>
