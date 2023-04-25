@@ -36,7 +36,8 @@
     <div class="card my-4" th:each="folder:${folders}">
         <div class="card-header"></div>
         <div class="card-body">
-            <h5 class="card-title" th:text="${folder.name}"></h5>
+            <h5 class="card-title" th:text="${folder.name}
+                    + ' (' + ${taskCountByFolderMap.getOrDefault(folder.id, 0)} + ')'"></h5>
             <a th:href="@{/folder/{id}(id = ${folder.id})}" class="btn btn-primary">Details</a>
         </div>
     </div>

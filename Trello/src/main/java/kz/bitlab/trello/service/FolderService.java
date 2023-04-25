@@ -8,7 +8,6 @@ import java.util.List;
 public interface FolderService {
     Folder getFolderById(Long id);
     List<Folder> getAllFolders();
-
     Folder addFolder(Folder folder);
     Folder editFolder(Folder folder);
 }

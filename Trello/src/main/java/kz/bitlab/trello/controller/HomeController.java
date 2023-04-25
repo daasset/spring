@@ -2,6 +2,7 @@ package kz.bitlab.trello.controller;
 
 import kz.bitlab.trello.entity.Folder;
 import kz.bitlab.trello.service.FolderService;
+import kz.bitlab.trello.service.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class HomeController {
     private FolderService folderService;
+    private TaskService taskService;
 
     @GetMapping
     public String showHome(Model model) {
+        for(var entry : taskService.getTasksCountByFolderMap().entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        model.addAttribute("taskCountByFolderMap", taskService.getTasksCountByFolderMap());
         model.addAttribute("folders", folderService.getAllFolders());
         return "home";
     }

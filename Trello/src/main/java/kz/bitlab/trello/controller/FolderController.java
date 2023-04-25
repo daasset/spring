@@ -31,7 +31,8 @@ public class FolderController {
 
         model.addAttribute("folder", folder);
         model.addAttribute("tasks", taskService.getTasksByFolder(folder));
-        model.addAttribute("unassignedCategories",unassignedCategories);
+        model.addAttribute("unassignedCategories", unassignedCategories);
+        model.addAttribute("allTaskStatuses", Task.Status.values());
 
         return "folder";
     }
@@ -50,6 +51,28 @@ public class FolderController {
                 .folder(folder)
                 .build();
         if (taskService.addTask(task) != null) {
+            redirectStr = "/folder/" + folderId + "?success";
+        }
+
+        return "redirect:" + redirectStr;
+    }
+
+    @PostMapping("/task/edit")
+    private String editTaskPost(
+            @RequestParam("folder-id") long folderId,
+            @RequestParam("task-id") long taskId,
+            @RequestParam("task-title") String taskTitle,
+            @RequestParam("task-description") String taskDescription,
+            @RequestParam("task-status") Task.Status status) {
+        String redirectStr = "/folder/" + folderId + "?error";
+
+        Task task = taskService.getTaskById(taskId);
+        if (task != null) {
+            task.setTitle(taskTitle);
+            task.setDescription(taskDescription);
+            task.setStatus(status);
+        }
+        if (taskService.editTask(task) != null) {
             redirectStr = "/folder/" + folderId + "?success";
         }
 

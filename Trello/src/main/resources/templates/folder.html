@@ -105,11 +105,53 @@
                 <td class="align-middle w-75" th:text="${task.title}"></td>
                 <td class="align-middle" th:text="${task.status.displayName}"></td>
                 <td class="align-middle">
-                    <a th:href="@{/task/{id}(id = ${task.id})}" class="btn btn-primary">View More</a>
+                    <a href="#" class="btn btn-primary"
+                       data-bs-toggle="modal" th:attr="data-bs-target=${'#editTaskModal' + task.id}">
+                        Edit
+                    </a>
                 </td>
             </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="modal fade" th:id="${'editTaskModal' + task.id}" th:each="task : ${tasks}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/folder/task/edit}" method="post">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">ADD NEW TASK</h1>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="visually-hidden" name="folder-id" th:value="${folder.id}">
+                        <input type="text" class="visually-hidden" name="task-id" th:value="${task.id}">
+
+                        <div class="mb-3">
+                            <label th:for="${'taskTitle' + task.id}" class="form-label">TITLE:</label>
+                            <input type="text" class="form-control" th:id="${'taskTitle' + task.id}"
+                                   th:value="${task.title}" th:name="task-title">
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="${'taskDescription' + task.id}" class="form-label">DESCRIPTION:</label>
+                            <textarea rows="4" class="form-control" th:id="${'taskDescription' + task.id}"
+                                      th:text="${task.description}" name="task-description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="${'taskStatus' + task.id}" class="form-label">STATUS:</label>
+                            <select class="form-select" th:id="${'taskStatus' + task.id}"
+                                    name="task-status">
+                                <option th:each="status : ${allTaskStatuses}" th:value="${status}"
+                                        th:text="${status.displayName}" th:selected="${status == task.status}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</a>
+                        <button type="submit" class="btn btn-success">EDIT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </html>
