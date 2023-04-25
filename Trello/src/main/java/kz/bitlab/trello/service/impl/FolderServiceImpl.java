@@ -1,5 +1,6 @@
 package kz.bitlab.trello.service.impl;
 
+import kz.bitlab.trello.entity.Category;
 import kz.bitlab.trello.entity.Folder;
 import kz.bitlab.trello.repository.FolderRepository;
 import kz.bitlab.trello.service.FolderService;

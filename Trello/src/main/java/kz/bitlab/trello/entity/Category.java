@@ -3,6 +3,8 @@ package kz.bitlab.trello.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Builder
 @NoArgsConstructor
@@ -16,4 +18,7 @@ public class Category {
 
     @Column(length = 100, nullable = false)
     private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
+    private List<Folder> folders;
 }

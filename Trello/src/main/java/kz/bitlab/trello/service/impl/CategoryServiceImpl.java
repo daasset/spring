@@ -29,10 +29,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category addCategory(Category category) {
-        if (category.getId() != null) {
-            throw new IllegalArgumentException("Category with existing id passed to method addCategory");
+    public Category addCategory(String name) {
+        if (name == null || name.isEmpty()) {
+            return null;
         }
+        Category category = categoryRepository.findCategoryByName(name);
+        if (category != null) {
+            return null;
+        }
+        category = Category.builder().name(name).build();
 
         return categoryRepository.save(category);
     }

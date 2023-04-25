@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 @Transactional
 public interface CategoryRepository extends JpaRepository<Category, Long> {
+    Category findCategoryByName(String name);
 }

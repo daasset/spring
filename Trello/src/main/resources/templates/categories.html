@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<div layout:fragment="main_content">
+    <!-- Button with modal -->
+    <div>
+        <a href="#" class="h5 link-dark link-underline-opacity-0 link-underline-opacity-100-hover"
+           data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+            + Add Category
+        </a>
+
+        <div class="modal fade" id="addCategoryModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{/categories/add}" method="post">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5">ADD NEW CATEGORY</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="categoryName" class="form-label">CATEGORY NAME:</label>
+                                <input type="text" class="form-control" id="categoryName" name="category-name">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</a>
+                            <button type="submit" class="btn btn-success">ADD</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Folders</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${categories}">
+                <th class="align-middle w-25" th:text="${category.id}"></th>
+                <td class="align-middle w-25" th:text="${category.name}"></td>
+                <td class="align-middle w-25">
+                    <a class="me-2" th:href="@{/folder/{id}(id = ${folder.id})}"
+                       th:each="folder : ${category.folders}" th:text="${folder.name}"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>
